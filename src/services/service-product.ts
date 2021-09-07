@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { v4 as uuidv4 } from 'uuid'
 import { FetchProductResponseDto, addProductDto } from 'src/dto/ProductDto';
 
@@ -17,10 +17,11 @@ export class ProductService {
     })
     if (foundProduct) {
       return foundProduct
-    }
-    return {
-      code: 401,
-      message: `Cannot find product with id ${id}`
+    } else {
+      throw new HttpException({
+          status: HttpStatus.BAD_REQUEST,
+          error: 'Unable to find product',
+      }, HttpStatus.BAD_REQUEST);
     }
   }
 
@@ -43,10 +44,10 @@ export class ProductService {
         return product
       }
     })
-    return {
-      code: 401,
-      message: `product with id ${uuid} not found`
-    }
+    throw new HttpException({
+        status: HttpStatus.BAD_REQUEST,
+        error: 'Unable to update',
+    }, HttpStatus.BAD_REQUEST);
   }
 
   deleteProduct(uuid: string): FetchProductResponseDto | HttpResponseDto{
@@ -60,10 +61,10 @@ export class ProductService {
     if (deletedElement) {
       return deletedElement
     } else {
-      return {
-        code: 401,
-        message: `Cannot find element with uuid ${uuid}`
-      }
+      throw new HttpException({
+          status: HttpStatus.BAD_REQUEST,
+          error: `Unable to delete product with id ${uuid}`,
+      }, HttpStatus.BAD_REQUEST);
     }
   }
 }
