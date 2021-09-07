@@ -8,7 +8,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 // Services
 import { ProductService } from './services/service-product';
-import { AuthenticationService } from './services/service-login';
+import { AuthenticationService } from './services/service-auth';
 @Module({
   imports: [
     TypeOrmModule.forRoot(), 

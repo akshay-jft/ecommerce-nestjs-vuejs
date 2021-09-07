@@ -4,6 +4,8 @@ import { FetchProductResponseDto, addProductDto } from 'src/dto/ProductDto';
 
 import { data } from 'src/data/tempData';
 import { HttpResponseDto } from 'src/dto/HttpResponseDto'
+
+@Injectable()
 export class ProductService {
   private db = data 
 
