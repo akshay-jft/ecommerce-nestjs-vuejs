@@ -2,39 +2,13 @@
   <v-app>
     <v-app-bar
       app
-      color="primary"
+      color="#2874F0"
       dark
-    >
-      <div class="d-flex align-center">
-        <v-img
-          alt="Vuetify Logo"
-          class="shrink mr-2"
-          contain
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
-          transition="scale-transition"
-          width="40"
-        />
-
-        <v-img
-          alt="Vuetify Name"
-          class="shrink mt-1 hidden-sm-and-down"
-          contain
-          min-width="100"
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
-          width="100"
-        />
-      </div>
-
-      <v-spacer></v-spacer>
-
-      <v-btn
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-        text
-      >
-        <span class="mr-2">Latest Release</span>
-        <v-icon>mdi-open-in-new</v-icon>
-      </v-btn>
+    > 
+    <v-container> 
+      <Navbar/>
+    </v-container>
+      
     </v-app-bar>
 
     <v-main>
@@ -44,12 +18,19 @@
 </template>
 
 <script>
-
+import Navbar from './components/UI/Navbar.vue'
 export default {
+  components: { Navbar },
   name: 'App',
 
-  data: () => ({
-    //
-  }),
+  data(){
+    return{
+
+    }
+  }
 };
 </script>
+
+<style>
+@import './assets/css/global.css'
+</style>
