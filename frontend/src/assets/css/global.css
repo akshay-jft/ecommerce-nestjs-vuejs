@@ -3,3 +3,9 @@
   font-family: 'Roboto', sans-serif;
   box-sizing: border-box;
 }
+:root{
+  --primaryColor: #2874F0
+}
+a{
+  text-decoration: none;
+}

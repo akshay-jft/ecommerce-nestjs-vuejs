@@ -6,6 +6,8 @@ import vuetify from './plugins/vuetify'
 
 Vue.config.productionTip = false
 
+import httpServicePlugin from './plugins/httpService'
+Vue.use(httpServicePlugin)
 new Vue({
   router,
   store,

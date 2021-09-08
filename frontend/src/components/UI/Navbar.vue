@@ -9,7 +9,9 @@
         color="#2874F0" 
         text 
         width="100px"
-        class="mr-4 login-btn">
+        class="mr-4 login-btn"
+        @click="showLoginModal(true)">
+        
         Login
       </v-btn>
       <div class="text-center">
@@ -39,7 +41,7 @@
         text
         dark
       >
-        Cart <v-icon class="ml-2">mdi-cart</v-icon>
+        <v-icon class="mr-2">mdi-cart</v-icon> Cart 
       </v-btn>
     </div>
   </div>
@@ -47,7 +49,11 @@
 
 <script>
 export default {
-
+  methods:{ 
+    showLoginModal(value){ 
+      this.$store.dispatch('setLoginModal', value)
+    }
+  }
 }
 </script>
 
