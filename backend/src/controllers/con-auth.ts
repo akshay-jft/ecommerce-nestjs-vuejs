@@ -11,7 +11,7 @@ export class AuthController {
   @Post()
   validateLogin(
     @Body() body: AuthDto
-  ): LoginResponseDto {
+  ): LoginResponseDto { 
     return this.authServices.validateLogin(body.email, body.password)
   }
 

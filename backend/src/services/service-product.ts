@@ -13,7 +13,7 @@ export class ProductService {
     return this.db 
   }
 
-  fetchProduct(id): FetchProductResponseDto | HttpResponseDto {
+  fetchProduct(id: string): FetchProductResponseDto | HttpResponseDto {
     const foundProduct =  this.db.find(product => {
       return product.id === id
     })

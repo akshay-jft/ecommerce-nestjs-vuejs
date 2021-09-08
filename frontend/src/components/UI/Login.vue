@@ -14,7 +14,7 @@
         <div class="form">
           <v-text-field
             label="Enter Email/Mobile number"
-            v-model="formdata.username"
+            v-model="formdata.email"
           ></v-text-field>
           <v-text-field
             label="Enter Password"
@@ -33,7 +33,7 @@
             Privacy Policy.
           </span>
         </small>
-        <button class="login-btn mt-2 pa-2">Login</button>
+        <button class="login-btn mt-2 pa-2" @click="handleLogin">Login</button>
         <p class="title my-3 d-block text-center">OR</p>
         <button 
           class="otp-btn mb-1 elevation-1 pa-2">Request OTP
@@ -64,6 +64,15 @@ export default {
   methods:{
     closeModal(){
       this.$store.dispatch('setLoginModal', false)
+    },
+    handleLogin(){
+      this.$axios.post('http://localhost:3000/auth', this.formdata)
+      .then(response=>{
+        alert('logged in')
+      })
+      .catch(err=>{ 
+        alert(err.response.data.error)
+      })
     }
   } 
 }
