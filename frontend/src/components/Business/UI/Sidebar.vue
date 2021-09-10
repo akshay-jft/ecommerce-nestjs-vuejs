@@ -29,19 +29,19 @@
           nav
           dense
         >
-          <v-list-item link>
+          <v-list-item link @click="setUserSelection(1)">
             <v-list-item-icon>
               <v-icon>mdi-folder</v-icon>
             </v-list-item-icon>
             <v-list-item-title>My Products</v-list-item-title>
           </v-list-item>
-          <v-list-item link>
+          <v-list-item link @click="setUserSelection(0)">
             <v-list-item-icon>
               <v-icon>mdi-account-multiple</v-icon>
             </v-list-item-icon>
             <v-list-item-title>Dashboard</v-list-item-title>
           </v-list-item>
-          <v-list-item link>
+          <v-list-item link @click="setUserSelection(2)">
             <v-list-item-icon>
               <v-icon>mdi-star</v-icon>
             </v-list-item-icon>
@@ -55,7 +55,11 @@
 
 <script>
 export default {
-
+  methods:{ 
+    setUserSelection(value){
+      this.$emit('userSelection', value)
+    }
+  }
 }
 </script>
 

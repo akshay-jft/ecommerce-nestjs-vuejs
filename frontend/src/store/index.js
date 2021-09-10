@@ -5,6 +5,9 @@ Vue.use(Vuex)
 
 // UI Modules
 import UI from './uiState'
+
+// Seller State
+import sellerProduct from './sellerProducts'
 export default new Vuex.Store({
   state: {
   },
@@ -13,6 +16,6 @@ export default new Vuex.Store({
   actions: {
   },
   modules: {
-    UI
+    UI, sellerProduct
   }
 })

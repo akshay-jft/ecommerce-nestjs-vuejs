@@ -1,337 +1,113 @@
 <template>
-  <v-data-table
-    :headers="headers"
-    :items="desserts"
-    sort-by="calories"
-    class="elevation-1"
-  >
-    <template v-slot:top>
-      <v-toolbar
-        flat
+  <div class="product-body">
+    <h1 class="title">Seller Catalouge</h1>
+    <div class="filterbar mt-5">
+      <div class="d-flex align-center">
+        Filter Products By
+        <v-btn class="mx-3" text>Price</v-btn>
+        <v-btn class="mr-3" text>Quantity</v-btn>
+        <v-btn class="mr-3" text>Category</v-btn>
+      </div>
+      <div>
+        <v-btn>Add Product</v-btn>
+      </div>
+    </div>
+    <div class="product-list mt-10">
+      <div class="product head">
+        <span>Name</span>
+        <span>Price</span>
+        <span>Quantity</span>
+        <span>Description</span>
+        <span>Categories</span>
+      </div>
+      <div 
+        class="product"
+        v-for="product in userProducts"
+        :key="product.id"
+        @click="listProductDetail(product)"
       >
-        <v-toolbar-title>My Products</v-toolbar-title>
-        <v-divider
-          class="mx-4"
-          inset
-          vertical
-        ></v-divider>
-        <v-spacer></v-spacer>
-        <v-dialog
-          v-model="dialog"
-          max-width="500px"
-        >
-          <template v-slot:activator="{ on, attrs }">
-            <v-btn
-              color="primary"
-              dark
-              class="mb-2"
-              v-bind="attrs"
-              v-on="on"
-            >
-              New Item
-            </v-btn>
-          </template>
-          <v-card>
-            <v-card-title>
-              <span class="text-h5">{{ formTitle }}</span>
-            </v-card-title>
-
-            <v-card-text>
-              <v-container>
-                <v-row>
-                  <v-col
-                    cols="12"
-                    sm="6"
-                    md="4"
-                  >
-                    <v-text-field
-                      v-model="editedItem.name"
-                      label="Dessert name"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col
-                    cols="12"
-                    sm="6"
-                    md="4"
-                  >
-                    <v-text-field
-                      v-model="editedItem.calories"
-                      label="Calories"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col
-                    cols="12"
-                    sm="6"
-                    md="4"
-                  >
-                    <v-text-field
-                      v-model="editedItem.fat"
-                      label="Fat (g)"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col
-                    cols="12"
-                    sm="6"
-                    md="4"
-                  >
-                    <v-text-field
-                      v-model="editedItem.carbs"
-                      label="Carbs (g)"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col
-                    cols="12"
-                    sm="6"
-                    md="4"
-                  >
-                    <v-text-field
-                      v-model="editedItem.protein"
-                      label="Protein (g)"
-                    ></v-text-field>
-                  </v-col>
-                </v-row>
-              </v-container>
-            </v-card-text>
-
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn
-                color="blue darken-1"
-                text
-                @click="close"
-              >
-                Cancel
-              </v-btn>
-              <v-btn
-                color="blue darken-1"
-                text
-                @click="save"
-              >
-                Save
-              </v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
-        <v-dialog v-model="dialogDelete" max-width="500px">
-          <v-card>
-            <v-card-title class="text-h5">Are you sure you want to delete this item?</v-card-title>
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn color="blue darken-1" text @click="closeDelete">Cancel</v-btn>
-              <v-btn color="blue darken-1" text @click="deleteItemConfirm">OK</v-btn>
-              <v-spacer></v-spacer>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
-      </v-toolbar>
-    </template>
-    <template v-slot:item.actions="{ item }">
-      <v-icon
-        small
-        class="mr-2"
-        @click="editItem(item)"
-      >
-        mdi-pencil
-      </v-icon>
-      <v-icon
-        small
-        @click="deleteItem(item)"
-      >
-        mdi-delete
-      </v-icon>
-    </template>
-    <template v-slot:no-data>
-      <v-btn
-        color="primary"
-        @click="initialize"
-      >
-        Reset
-      </v-btn>
-    </template>
-  </v-data-table>
+        <span>{{ product.name }}</span>
+        <span>${{ product.price}}</span>
+        <span>{{ product.quantity}}</span> 
+        <span>{{ product.description }}</span>
+        <span>{{ product.categories[0] }}, {{ product.categories[1] }}... </span>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
-  export default {
-    data: () => ({
-      dialog: false,
-      dialogDelete: false,
-      headers: [
+export default {
+  data(){
+    return{
+      userProducts: [
         {
-          text: 'Dessert (100g serving)',
-          align: 'start',
-          sortable: false,
-          value: 'name',
+          id: "34b75f4c-a89c-4cba-ba4e-f7e701df0004",
+          name: "Acer nitro 5x ROG edition",
+          price: "2499.9",
+          description: "This is my first dummy product",
+          quantity: 5,
+          image: 'https://source.unsplash.com/Bd7gNnWJBkU',
+          categories: ['dummy', 'electronic'],
+          rating: 4.2,
+          totalRatings: 1390, // Must be an array
+          totalReviews: 219, // Must be an array,
+          availableOffers: [
+            'Bank Offer 10% off on ICICI Bank Credit Cards, up to ₹1250. On orders of ₹5000 and above',
+            'Bank Offer 10% off on ICICI Bank Credit Card EMI, up to ₹1250. On orders of ₹5000 and above',
+            'Bank Offer 5% Unlimited Cashback on Flipkart Axis Bank Credit Card',
+            'Get Mi Smart Speaker at just ₹1999 on purchase of select Smartphones, TVs, Laptops, TV streaming'
+          ]
         },
-        { text: 'Calories', value: 'calories' },
-        { text: 'Fat (g)', value: 'fat' },
-        { text: 'Carbs (g)', value: 'carbs' },
-        { text: 'Protein (g)', value: 'protein' },
-        { text: 'Actions', value: 'actions', sortable: false },
-      ],
-      desserts: [],
-      editedIndex: -1,
-      editedItem: {
-        name: '',
-        calories: 0,
-        fat: 0,
-        carbs: 0,
-        protein: 0,
-      },
-      defaultItem: {
-        name: '',
-        calories: 0,
-        fat: 0,
-        carbs: 0,
-        protein: 0,
-      },
-    }),
-
-    computed: {
-      formTitle () {
-        return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
-      },
-    },
-
-    watch: {
-      dialog (val) {
-        val || this.close()
-      },
-      dialogDelete (val) {
-        val || this.closeDelete()
-      },
-    },
-
-    created () {
-      this.initialize()
-    },
-
-    methods: {
-      initialize () {
-        this.desserts = [
-          {
-            name: 'Frozen Yogurt',
-            calories: 159,
-            fat: 6.0,
-            carbs: 24,
-            protein: 4.0,
-          },
-          {
-            name: 'Ice cream sandwich',
-            calories: 237,
-            fat: 9.0,
-            carbs: 37,
-            protein: 4.3,
-          },
-          {
-            name: 'Eclair',
-            calories: 262,
-            fat: 16.0,
-            carbs: 23,
-            protein: 6.0,
-          },
-          {
-            name: 'Cupcake',
-            calories: 305,
-            fat: 3.7,
-            carbs: 67,
-            protein: 4.3,
-          },
-          {
-            name: 'Gingerbread',
-            calories: 356,
-            fat: 16.0,
-            carbs: 49,
-            protein: 3.9,
-          },
-          {
-            name: 'Jelly bean',
-            calories: 375,
-            fat: 0.0,
-            carbs: 94,
-            protein: 0.0,
-          },
-          {
-            name: 'Lollipop',
-            calories: 392,
-            fat: 0.2,
-            carbs: 98,
-            protein: 0,
-          },
-          {
-            name: 'Honeycomb',
-            calories: 408,
-            fat: 3.2,
-            carbs: 87,
-            protein: 6.5,
-          },
-          {
-            name: 'Donut',
-            calories: 452,
-            fat: 25.0,
-            carbs: 51,
-            protein: 4.9,
-          },
-          {
-            name: 'KitKat',
-            calories: 518,
-            fat: 26.0,
-            carbs: 65,
-            protein: 7,
-          },
-        ]
-      },
-
-      editItem (item) {
-        this.editedIndex = this.desserts.indexOf(item)
-        this.editedItem = Object.assign({}, item)
-        this.dialog = true
-      },
-
-      deleteItem (item) {
-        this.editedIndex = this.desserts.indexOf(item)
-        this.editedItem = Object.assign({}, item)
-        this.dialogDelete = true
-      },
-
-      deleteItemConfirm () {
-        this.desserts.splice(this.editedIndex, 1)
-        this.closeDelete()
-      },
-
-      close () {
-        this.dialog = false
-        this.$nextTick(() => {
-          this.editedItem = Object.assign({}, this.defaultItem)
-          this.editedIndex = -1
-        })
-      },
-
-      closeDelete () {
-        this.dialogDelete = false
-        this.$nextTick(() => {
-          this.editedItem = Object.assign({}, this.defaultItem)
-          this.editedIndex = -1
-        })
-      },
-
-      save () {
-        if (this.editedIndex > -1) {
-          Object.assign(this.desserts[this.editedIndex], this.editedItem)
-        } else {
-          this.desserts.push(this.editedItem)
+        {
+          id: "34b75f4c-a89c-4cba-46s1-f7e701df0004",
+          name: "Second Dummy product",
+          price: "249.9",
+          quantity: 5,
+          description: "This is my second dummy product",
+          categories: ['dummy', 'fashion']
         }
-        this.close()
-      },
-    },
+      ]
+    }
+  },
+  created(){
+
+  },
+  methods:{
+    listProductDetail(product){
+      this.$store.dispatch('setSelectedProduct', product)
+      this.$router.push(`/seller/products/${product.id}`)
+    }
   }
+}
 </script>
 
-<style scoped>
-.product-image{
-  max-height: 200px;
+<style scoped> 
+.product-body{
+  width: 100%;
 }
-.product-card{
-  max-width: 250px;
+.filterbar{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 } 
+.product{
+  display: grid;
+  grid-template-columns: 30% 10% 10% 30% 20%;
+}
+.product:hover{
+  cursor: pointer;
+  background-color: #eee;
+  box-shadow: 0 1px 1px rgba(0,0,0,0.8);
+}
+.product span{
+  padding: 10px; 
+  border: 1px solid #ccc;
+  color: #666;
+}
+.product.head span{
+  font-weight: 600;
+  color: black;
+}
 </style>
