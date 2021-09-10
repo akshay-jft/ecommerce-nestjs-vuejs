@@ -2,12 +2,13 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { v4 as uuidv4 } from 'uuid'
 import { FetchProductResponseDto, addProductDto } from 'src/dto/ProductDto';
 
-import { data } from 'src/data/tempData';
 import { HttpResponseDto } from 'src/dto/HttpResponseDto'
+import { getProducts, addProducts, setProducts } from 'src/storage/store'; 
+import { throwBadRequestException, throwForbiddenRequest } from 'src/helperFunctions/httpExceptions';
 
 @Injectable()
 export class ProductService {
-  private db = data 
+  private db = getProducts() 
 
   fetchProducts() :FetchProductResponseDto[] {
     return this.db 
@@ -20,10 +21,7 @@ export class ProductService {
     if (foundProduct) {
       return foundProduct
     } else {
-      throw new HttpException({
-          status: HttpStatus.BAD_REQUEST,
-          error: 'Unable to find product',
-      }, HttpStatus.BAD_REQUEST);
+      throw throwBadRequestException('Unable to find product') 
     }
   }
 
@@ -32,12 +30,13 @@ export class ProductService {
       id: uuidv4(),
       ...data
     }
-    this.db.push(newProduct)
+    addProducts(newProduct)
+    this.db = getProducts()
     return newProduct
   }
 
   updateProductDetails(uuid: string, data: addProductDto): FetchProductResponseDto | HttpResponseDto {
-    this.db.map(product => {
+    this.db = this.db.map(product => {
       if (product.id == uuid) {
         product = {
           id: uuid,
@@ -46,10 +45,8 @@ export class ProductService {
         return product
       }
     })
-    throw new HttpException({
-        status: HttpStatus.BAD_REQUEST,
-        error: 'Unable to update',
-    }, HttpStatus.BAD_REQUEST);
+    setProducts(this.db)
+    throw throwBadRequestException(`Unable to update`) 
   }
 
   deleteProduct(uuid: string): FetchProductResponseDto | HttpResponseDto{
@@ -59,14 +56,12 @@ export class ProductService {
     this.db = this.db.filter(product => {
       return product.id !== uuid
     })
+    setProducts(this.db) 
 
     if (deletedElement) {
       return deletedElement
     } else {
-      throw new HttpException({
-          status: HttpStatus.BAD_REQUEST,
-          error: `Unable to delete product with id ${uuid}`,
-      }, HttpStatus.BAD_REQUEST);
+      throw throwBadRequestException(`Unable to delete product with id ${uuid}`)
     }
   }
 }
